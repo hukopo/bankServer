@@ -14,7 +14,8 @@ const NotePaySchema = new Schema({
     scoreNum: { type: String },
     phoneNum: { type: String },
     payerNum: { type: String },
-    createdAt: { type: Date }
+    createdAt: { type: Date },
+    check: { type: Boolean }
 });
 
 mongoose.model('NotePay', NotePaySchema);

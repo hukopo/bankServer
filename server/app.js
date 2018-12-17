@@ -35,6 +35,11 @@ app.delete('/notes/:id', (req, res) => {
     db.deleteNote(req.params.id).then(data => res.send(data));
 });
 
+app.post('/ggupdate/:id', (req, res) => {
+    console.log("ggpay");
+    db.checkSuspicious(req.params.id).then(data => res.send(data));
+});
+
 // RESTful api handlers
 app.get('/notespay', (req, res) => {
     dbPay.listNotesPay().then(data => res.send(data));

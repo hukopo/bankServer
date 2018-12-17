@@ -27,7 +27,8 @@ export function createNote(data) {
         scoreNum: data.scoreNum,
         phoneNum: data.phoneNum,
         payerNum: data.payerNum,
-        createdAt: new Date()
+        createdAt: new Date(),
+        check: false
     });
 
     return note.save();
@@ -35,5 +36,15 @@ export function createNote(data) {
 
 export function deleteNote(id) {
     return Note.findById(id).remove();
+}
+
+export function checkSuspicious(id) {
+    return Note.findByIdAndUpdate(id,
+        { check: true },
+        function (err, author) {
+            if (err) throw err;
+
+            console.log(author)
+        });
 }
 

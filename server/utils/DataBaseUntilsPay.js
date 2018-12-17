@@ -27,13 +27,15 @@ export function createNotePay(data) {
         scoreNum: data.scoreNum,
         phoneNum: data.phoneNum,
         payerNum: data.payerNum,
-        createdAt: new Date()
+        createdAt: new Date(),
+        check: false
     });
 
     return note.save();
 }
 
 export function deleteNotePay(id) {
+    console.log("deletePay")
     return NotePay.findById(id).remove();
 }
 
