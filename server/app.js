@@ -6,6 +6,7 @@ import { serverPort } from '../etc/config.json';
 
 import * as db from './utils/DataBaseUtils';
 import * as dbPay from './utils/DataBaseUntilsPay';
+import * as dbUsers from './utils/DataBaseUsers';
 
 // Initialization of express application
 const app = express();
@@ -17,7 +18,7 @@ db.setUpConnection();
 dbPay.setUpConnectionPay();
 
 // Using bodyParser middleware
-app.use( bodyParser.json() );
+app.use(bodyParser.json());
 
 // Allow requests from any origin
 app.use(cors({ origin: '*' }));
@@ -53,6 +54,23 @@ app.delete('/notespay/:id', (req, res) => {
     dbPay.deleteNotePay(req.params.id).then(data => res.send(data));
 });
 
-const server = app.listen(serverPort, function() {
+// RESTful api handlers
+//app.get('/auth', (req, res) => {
+//    dbUsers.auth().then(data => res.send(data));
+//});
+
+app.post('/auth/:login/:password', (req, res) => {
+    dbUsers.auth(req.params.login, req.params.password).then(data => {
+        let flag = false;
+        data.forEach(u => req.params.login === u.login && req.params.password === u.password ? flag = true : null)
+        res.send(flag)
+    });
+});
+
+app.post('/user', (req, res) => {
+    dbUsers.createUsers(req.body).then(data => res.send(data));
+});
+
+const server = app.listen(serverPort, function () {
     console.log(`Server is up and running on port ${serverPort}`);
 });
